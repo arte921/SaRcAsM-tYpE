@@ -3,6 +3,9 @@ let ff = true
 let textbox = document.getElementById('input')
 let slider = document.getElementById('randomslider')
 
+//doesnt seem logic behind the unicode numbers, so lookup table. also no q in unicode, so greek p
+let smallLetters = [ "ᵃ", "ᵇ", "ᶜ", "ᵈ", "ᵉ", "ᶠ", "ᵍ", "ʰ", "ⁱ", "ʲ", "ᵏ", "ˡ", "ᵐ", "ⁿ", "ᵒ", "ᵖ", "ᵠ", "ʳ", "ˢ", "ᵗ", "ᵘ", "ᵛ", "ʷ", "ˣ", "ʸ", "ᶻ" ]
+let smallNumbers = [ "⁰", "¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹" ]
 function update () {
   sarcasm = ''
   small = ''
@@ -13,7 +16,12 @@ function update () {
 
   for (i = 0; i < length; i++) {
     let char = input.charAt(i)
+
     sarcasm += (ff ? i % 2 == 0 : Math.random() > sarcasmAmount) ? char.toLowerCase() : char.toUpperCase()
+    
+    if (/([a-z])/.test(char)) small += smallLetters[char.charCodeAt(0) - 97]
+    else if (/([0-9])/.test(char)) small += smallNumbers[char]
+    else small += char
   }
 
   document.getElementById('sarcasm').innerHTML = sarcasm
