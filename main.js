@@ -1,27 +1,21 @@
-var input,output,i,length;
-var mode = 'ff';
-var ff = true;
-function update(){
-  output='';
-  input=document.getElementById('input').value;
-  length=input.length;
+let input, sarcasm, i, length
+let ff = true
+let textbox = document.getElementById('input')
+let slider = document.getElementById('randomslider')
 
-  if(ff){
-    for(i=0;i<length;i++){
-      if(i%2==0){
-        output += input.charAt(i).toLowerCase();
-      }else{
-        output += input.charAt(i).toUpperCase();
-      }
-    }
-  }else{
-    for(i=0;i<length;i++){
-      if(Math.random()>document.getElementById('randomslider').value / 100){
-        output += input.charAt(i).toLowerCase();
-      }else{
-        output += input.charAt(i).toUpperCase();
-      }
-    }
+function update () {
+  sarcasm = ''
+  small = ''
+
+  let sarcasmAmount = slider.value / 100
+  let input = textbox.value
+  length = input.length
+
+  for (i = 0; i < length; i++) {
+    let char = input.charAt(i)
+    sarcasm += (ff ? i % 2 == 0 : Math.random() > sarcasmAmount) ? char.toLowerCase() : char.toUpperCase()
   }
-  document.getElementById('output').innerHTML = output;
+
+  document.getElementById('sarcasm').innerHTML = sarcasm
+  document.getElementById('small').innerHTML = small
 }
