@@ -26,4 +26,5 @@ function update () {
 
   document.getElementById('sarcasm').innerHTML = sarcasm
   document.getElementById('small').innerHTML = small
+  document.getElementById('monospace').innerHTML = input.toUpperCase().split('').join(' ')
 }
