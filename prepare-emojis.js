@@ -15,7 +15,7 @@ function synonymsOf (word) {
 
 
 emojis = emojis.filter(line => line[0] != "#" && line.length > 10) //maybe check for unqualified
-emojis = emojis.map(line => line.split("#")[1].substr(1).toLowerCase())
+emojis = emojis.map(line => line.split("#")[1].substr(1).toLowerCase().replace(/[^[a-z ]]*/g, ""))
 
 let total = emojis.length
 let part = 0
