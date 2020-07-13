@@ -37,5 +37,5 @@ function update() {
     document.getElementById('small').innerHTML = small
     document.getElementById('monospace').innerHTML = input.toUpperCase().split("").join(" ")
     document.getElementById('emoji').innerHTML = withEmoji.join(" ")
-    document.getElementById('uwu').innerHTML = input.replace(/[blpf]/g, "w")
+    document.getElementById('uwu').innerHTML = input.replace(/[prl]/g, "w")
 }

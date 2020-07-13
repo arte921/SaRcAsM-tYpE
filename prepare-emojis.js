@@ -5,9 +5,9 @@ let emojis = fs.readFileSync(path + "/emojis.txt").toString().split("\n")
 let synonyms = fs.readFileSync(path + "/synonyms.json").toString().toLowerCase().split("\n").filter(entry => entry.length > 0).map(entry => JSON.parse(entry))
 
 function synonymsOf (word) {
-    let candidate = synonyms.filter(entry => entry.word == word)
-    if (candidate.length > 0){
-        return candidate[0].synonyms
+    let candidate = synonyms.find(entry => entry.word == word)
+    if (candidate != null){
+        return candidate.synonyms
     } else {
         return []
     }
