@@ -1,15 +1,40 @@
 const fs = require('fs')
 const path = process.cwd()
 
-const rawinput = fs.readFileSync(path + "/emojis.txt").toString()
-let emojis = rawinput.split("\n")
+let emojis = fs.readFileSync(path + "/emojis.txt").toString().split("\n")
+let synonyms = fs.readFileSync(path + "/synonyms.json").toString().toLowerCase().split("\n").filter(entry => entry.length > 0).map(entry => JSON.parse(entry))
+
+function synonymsOf (word) {
+    let candidate = synonyms.filter(entry => entry.word == word)
+    if (candidate.length > 0){
+        return candidate[0].synonyms
+    } else {
+        return []
+    }
+}
+
 
 emojis = emojis.filter(line => line[0] != "#" && line.length > 10) //maybe check for unqualified
-emojis = emojis.map(line => line.split("#")[1].substr(1))
+emojis = emojis.map(line => line.split("#")[1].substr(1).toLowerCase())
+
+let total = emojis.length
+let part = 0
 emojis = emojis.map(line => {
     let parts = line.split(" ")
     let emoji = parts[0]
     parts.shift()
+    parts.forEach(keyword => {
+        if (/ing$/.test(keyword)) {
+            parts.push(keyword.replace(/ing$/, "e"))
+        }
+    })
+
+    parts.forEach(keyword => {
+        parts = parts.concat(synonymsOf(keyword))
+    })
+
+    console.log(part / total * 100, emoji, parts)
+    part++
     return [emoji, parts]
 })
 

@@ -7,8 +7,8 @@ let smallLetters = ["ᵃ", "ᵇ", "ᶜ", "ᵈ", "ᵉ", "ᶠ", "ᵍ", "ʰ", "ⁱ"
 let smallNumbers = ["⁰", "¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹"]
 
 function getEmoji(keyword) {
-    let candidates = emoji.filter(entry => entry[1].includes(keyword))
-    return candidates.length > 0 ? candidates[0][0] : " "
+    let candidates = emoji.filter(entry => entry[1].join(" ").indexOf(keyword.toLowerCase()) >= 0)
+    return candidates.length > 0 ? candidates[0][0] : " " //Math.floor(Math.random() * candidates.length)
 }
 
 function update() {
@@ -21,12 +21,13 @@ function update() {
 
     for (i = 0; i < length; i++) {
         let char = input.charAt(i)
+        let lchar = char.toLowerCase()
 
         sarcasm += (ff ? i % 2 == 0 : Math.random() > sarcasmAmount) ? char.toLowerCase() : char.toUpperCase()
 
-        if (/([a-z])/.test(char)) small += smallLetters[char.charCodeAt(0) - 97]
+        if (/([a-z])/.test(lchar)) small += smallLetters[lchar.charCodeAt(0) - 97]
         else if (/([0-9])/.test(char)) small += smallNumbers[char]
-        else small += char
+        else small += lchar
     }
 
     let withEmoji = input.split(" ")
