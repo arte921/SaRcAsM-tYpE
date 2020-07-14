@@ -2,13 +2,20 @@ let input, sarcasm, i, length
 let ff = true
 let textbox = document.getElementById('input')
 let slider = document.getElementById('randomslider')
+let maxemojibox = document.getElementById('maxemojis')
+
+let maxemojis = 1
 
 let smallLetters = ["ᵃ", "ᵇ", "ᶜ", "ᵈ", "ᵉ", "ᶠ", "ᵍ", "ʰ", "ⁱ", "ʲ", "ᵏ", "ˡ", "ᵐ", "ⁿ", "ᵒ", "ᵖ", "ᵠ", "ʳ", "ˢ", "ᵗ", "ᵘ", "ᵛ", "ʷ", "ˣ", "ʸ", "ᶻ"]
 let smallNumbers = ["⁰", "¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹"]
 
 function getEmoji(keyword) {
     let candidates = emoji.filter(entry => entry[1].join(" ").indexOf(keyword.toLowerCase()) >= 0)
-    return candidates.length > 0 ? candidates[0][0] : " " //Math.floor(Math.random() * candidates.length)
+    if (candidates.length > 0) {
+        let a = ""
+        for (let i=0; i < maxemojis && i < candidates.length; i++) a += candidates[i][0]
+        return a
+    } else return " "
 }
 
 function update() {
@@ -18,6 +25,7 @@ function update() {
     let sarcasmAmount = slider.value / 100
     let input = textbox.value
     length = input.length
+    maxemojis = maxemojibox.value
 
     for (i = 0; i < length; i++) {
         let char = input.charAt(i)
